@@ -1,0 +1,228 @@
+SQL> REM 23,24,25
+SQL> SELECT AR, A FROM AREA JOIN ASIGNATURA
+  2  ;
+
+*
+ERROR at line 2:
+ORA-00905: missing keyword 
+
+
+SQL> SELECT ARE.AR, ASIG.A FROM AREA ARE JOIN ASIGNATURA ASIG;
+SELECT ARE.AR, ASIG.A FROM AREA ARE JOIN ASIGNATURA ASIG
+                                                       *
+ERROR at line 1:
+ORA-00905: missing keyword 
+
+
+SQL> SELECT ARE.AR FROM AREA ARE JOIN ASIGNATURA ASIG;
+SELECT ARE.AR FROM AREA ARE JOIN ASIGNATURA ASIG
+                                               *
+ERROR at line 1:
+ORA-00905: missing keyword 
+
+
+SQL> SELECT ARE.AR , ASIG.A FROM AREA ARE NATURAL JOIN ASIGNATURA ASIG;
+
+AR                                                                              
+------------------------------------------------------------                    
+A                                                                               
+--------------------------------------------------                              
+ALGEBRA                                                                         
+ALGEBRA                                                                         
+                                                                                
+ANALISIS MATEMATICO                                                             
+ANALISIS COMPLEJO                                                               
+                                                                                
+ASTRONOMIA Y ASTROFISICA                                                        
+ASTRONOMIA                                                                      
+                                                                                
+
+AR                                                                              
+------------------------------------------------------------                    
+A                                                                               
+--------------------------------------------------                              
+CIENCIAS DE LA COMPUTACION E INTELIGENCIA ARTIFICIAL                            
+GESTION DE RIESGOS                                                              
+                                                                                
+CIENCIAS DE LA COMPUTACION E INTELIGENCIA ARTIFICIAL                            
+INTELIGENCIA ARTIFICIAL                                                         
+                                                                                
+DIDACTICA DE LA MATEMATICA                                                      
+ENSENANZA DE LA MATEMATICA                                                      
+                                                                                
+
+AR                                                                              
+------------------------------------------------------------                    
+A                                                                               
+--------------------------------------------------                              
+ESTADISTICA E INVESTIGACION OPERATIVA                                           
+OPTIMIZACION                                                                    
+                                                                                
+LENGUAJES Y SISTEMAS INFORMATICOS                                               
+INFORMATICA BASICA                                                              
+                                                                                
+LENGUAJES Y SISTEMAS INFORMATICOS                                               
+MINERIA DE DATOS                                                                
+                                                                                
+
+AR                                                                              
+------------------------------------------------------------                    
+A                                                                               
+--------------------------------------------------                              
+LENGUAJES Y SISTEMAS INFORMATICOS                                               
+ALMACENES DE DATOS                                                              
+                                                                                
+LENGUAJES Y SISTEMAS INFORMATICOS                                               
+BASES DE DATOS                                                                  
+                                                                                
+MATEMATICA APLICADA                                                             
+CALCULO                                                                         
+                                                                                
+
+12 rows selected.
+
+SQL> SET LINESIZE 400
+SQL> SELECT ARE.AR , ASIG.A FROM AREA ARE NATURAL JOIN ASIGNATURA ASIG;
+
+AR                                                           A                                                                                                                                                                                                                                                                                                                                                  
+------------------------------------------------------------ --------------------------------------------------                                                                                                                                                                                                                                                                                                 
+ALGEBRA                                                      ALGEBRA                                                                                                                                                                                                                                                                                                                                            
+ANALISIS MATEMATICO                                          ANALISIS COMPLEJO                                                                                                                                                                                                                                                                                                                                  
+ASTRONOMIA Y ASTROFISICA                                     ASTRONOMIA                                                                                                                                                                                                                                                                                                                                         
+CIENCIAS DE LA COMPUTACION E INTELIGENCIA ARTIFICIAL         GESTION DE RIESGOS                                                                                                                                                                                                                                                                                                                                 
+CIENCIAS DE LA COMPUTACION E INTELIGENCIA ARTIFICIAL         INTELIGENCIA ARTIFICIAL                                                                                                                                                                                                                                                                                                                            
+DIDACTICA DE LA MATEMATICA                                   ENSENANZA DE LA MATEMATICA                                                                                                                                                                                                                                                                                                                         
+ESTADISTICA E INVESTIGACION OPERATIVA                        OPTIMIZACION                                                                                                                                                                                                                                                                                                                                       
+LENGUAJES Y SISTEMAS INFORMATICOS                            INFORMATICA BASICA                                                                                                                                                                                                                                                                                                                                 
+LENGUAJES Y SISTEMAS INFORMATICOS                            MINERIA DE DATOS                                                                                                                                                                                                                                                                                                                                   
+LENGUAJES Y SISTEMAS INFORMATICOS                            ALMACENES DE DATOS                                                                                                                                                                                                                                                                                                                                 
+LENGUAJES Y SISTEMAS INFORMATICOS                            BASES DE DATOS                                                                                                                                                                                                                                                                                                                                     
+
+AR                                                           A                                                                                                                                                                                                                                                                                                                                                  
+------------------------------------------------------------ --------------------------------------------------                                                                                                                                                                                                                                                                                                 
+MATEMATICA APLICADA                                          CALCULO                                                                                                                                                                                                                                                                                                                                            
+
+12 rows selected.
+
+SQL> REM 24
+SQL> SELECT DEP.D, ARE.AR FROM DEPARTAMENTO DEP NATURAL JOIN AREA ARE
+  2  ORBER BY DEP.D, ARE.AR ASC;
+ORBER BY DEP.D, ARE.AR ASC
+*
+ERROR at line 2:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> SELECT DEP.D, ARE.AR FROM DEPARTAMENTO DEP NATURAL JOIN AREA ARE
+  2  ORDER BY DEP.D, ARE.AR ASC;
+
+D                                                            AR                                                                                                                                                                                                                                                                                                                                                 
+------------------------------------------------------------ ------------------------------------------------------------                                                                                                                                                                                                                                                                                       
+ANALISIS MATEMATICO                                          ANALISIS MATEMATICO                                                                                                                                                                                                                                                                                                                                
+ANALISIS MATEMATICO                                          DIDACTICA DE LA MATEMATICA                                                                                                                                                                                                                                                                                                                         
+ANALISIS MATEMATICO                                          MATEMATICA APLICADA                                                                                                                                                                                                                                                                                                                                
+ASTROFISICA                                                  ASTRONOMIA Y ASTROFISICA                                                                                                                                                                                                                                                                                                                           
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION           CIENCIAS DE LA COMPUTACION E INTELIGENCIA ARTIFICIAL                                                                                                                                                                                                                                                                                               
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION           ESTADISTICA E INVESTIGACION OPERATIVA                                                                                                                                                                                                                                                                                                              
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION           LENGUAJES Y SISTEMAS INFORMATICOS                                                                                                                                                                                                                                                                                                                  
+MATEMATICA FUNDAMENTAL                                       ALGEBRA                                                                                                                                                                                                                                                                                                                                            
+
+8 rows selected.
+
+SQL> SELECT DEP.D, PRO.P FROM ( DEPARTAMENTO DEP NATURAL JOIN AREA ARE) NATURAL JOIN PROFESOR PRO
+  2  ORDER BY DEP.D, PRO.P ASC;
+
+D                                                            P                                                                                                                                                                                                                                                                                                                                                  
+------------------------------------------------------------ ------------------------------------------------------------                                                                                                                                                                                                                                                                                       
+ANALISIS MATEMATICO                                          ANGELA                                                                                                                                                                                                                                                                                                                                             
+ANALISIS MATEMATICO                                          FRANCISCO                                                                                                                                                                                                                                                                                                                                          
+ANALISIS MATEMATICO                                          MARIO                                                                                                                                                                                                                                                                                                                                              
+ASTROFISICA                                                  CARMEN                                                                                                                                                                                                                                                                                                                                             
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION           CARLOS                                                                                                                                                                                                                                                                                                                                             
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION           DAVID                                                                                                                                                                                                                                                                                                                                              
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION           JOSE MANUEL                                                                                                                                                                                                                                                                                                                                        
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION           JUAN                                                                                                                                                                                                                                                                                                                                               
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION           MARIA                                                                                                                                                                                                                                                                                                                                              
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION           PEDRO                                                                                                                                                                                                                                                                                                                                              
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION           SOLEDAD                                                                                                                                                                                                                                                                                                                                            
+
+D                                                            P                                                                                                                                                                                                                                                                                                                                                  
+------------------------------------------------------------ ------------------------------------------------------------                                                                                                                                                                                                                                                                                       
+MATEMATICA FUNDAMENTAL                                       IVAN                                                                                                                                                                                                                                                                                                                                               
+
+12 rows selected.
+
+SQL> REM 20+
+SQL> SELECT PRO.P FROM
+  2  ((SELECT DISTINCT PD.DNI FROM PLAN_DOCENTE PD NATURAL JOIN ASIGNATURA ASIG
+  3  WHERE ASIG.T='GII' AND FF IS NULL) NATURAL JOIN (SELECT DISTINCT PD.DNI
+  4  FROM PLAN_DOCENTE NATURAL JOIN ASIGNATURA ASIG WHERE T='MII' AND FF IS NULL))
+  5  NATURAL JOIN PROFESOR PRO;
+WHERE ASIG.T='GII' AND FF IS NULL) NATURAL JOIN (SELECT DISTINCT PD.DNI
+                                                                 *
+ERROR at line 3:
+ORA-00904: "PD"."DNI": invalid identifier 
+
+
+SQL> SELECT PRO.P FROM
+  2  ((SELECT DISTINCT PD.DNI FROM PLAN_DOCENTE PD NATURAL JOIN ASIGNATURA ASIG
+  3  FROM PLAN_DOCENTE PD NATURAL JOIN ASIGNATURA ASIG WHERE T='MII' AND FF IS NULL))
+  4  FROM PLAN_DOCENTE NATURAL JOIN ASIGNATURA ASIG WHERE T='MII' AND FF IS NULL))
+  5  
+SQL> 
+SQL> SELECT PRO.P FROM
+  2  ((SELECT DISTINCT PD.DNI FROM PLAN_DOCENTE PD NATURAL JOIN ASIGNATURA ASIG
+  3  WHERE ASIG.T='GII' AND FF IS NULL) NATURAL JOIN (SELECT DISTINCT PD.DNI
+  4  FROM PLAN_DOCENTE PD NATURAL JOIN ASIGNATURA ASIG WHERE T='MII' AND FF IS NULL))
+  5  NATURAL JOIN PROFESOR PRO;
+
+no rows selected
+
+SQL> REM 21
+SQL> SELECT PRO.P FROM PROFESOR PRO
+  2  LEFT JOIN PLAN_DOCENTE PD USING(PD.DNI)
+  3  
+SQL> 
+SQL> SELECT P FROM PROFESOR
+  2  LEFT JOIN PLAN_DOCENTE USING(DNI)
+  3  WHERE DNI NOT IN(SELECT DISTINCT DNI
+  4  FROM PLAN DOCENTE
+  5  WHERE FF IS NULL);
+FROM PLAN DOCENTE
+     *
+ERROR at line 4:
+ORA-00942: table or view does not exist 
+
+
+SQL> SELECT P FROM PROFESOR
+  2  LEFT JOIN PLAN_DOCENTE USING(DNI)
+  3  WHERE FF IS NULL);
+WHERE FF IS NULL)
+                *
+ERROR at line 3:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> SELECT P FROM PROFESOR
+  2  LEFT JOIN PLAN_DOCENTE USING(DNI)
+  3  WHERE DNI NOT IN(SELECT DISTINCT DNI
+  4  FROM PLAN_DOCENTE
+  5  WHERE FF IS NULL;
+WHERE FF IS NULL
+               *
+ERROR at line 5:
+ORA-00907: missing right parenthesis 
+
+
+SQL> SELECT P FROM PROFESOR
+  2  LEFT JOIN PLAN_DOCENTE USING(DNI)
+  3  WHERE DNI NOT IN(SELECT DISTINCT DNI
+  4  FROM PLAN_DOCENTE
+  5  WHERE FF IS NULL);
+
+P                                                                                                                                                                                                                                                                                                                                                                                                               
+------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                                    
+CARMEN                                                                                                                                                                                                                                                                                                                                                                                                          
+
+SQL> REM PRACTICA 5 TERMINADA
+SQL> SPOOL OFF
