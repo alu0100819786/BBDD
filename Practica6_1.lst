@@ -1,0 +1,146 @@
+SQL> SET LINE SIZE 400
+SP2-0268: linesize option not a valid number
+SQL> SET LINESIZE 400
+SQL> REM CONSULTA 1
+SQL> SYSTEM SYSDATE FROM DUAL;
+SP2-0734: unknown command beginning "SYSTEM SYS..." - rest of line ignored.
+SQL> SELECT SYSDATE FROM DUAL;
+
+SYSDATE                                                                                                                                                                                                                                                                                                                                                                                                         
+---------                                                                                                                                                                                                                                                                                                                                                                                                       
+15-DEC-17                                                                                                                                                                                                                                                                                                                                                                                                       
+
+SQL> REM COSULTA 2
+SQL> SELECT TO_CHAR(SYSDATE,'HH:MM:SS') AS HORA DEL SISTEMA
+  2  FROM DUAL;
+SELECT TO_CHAR(SYSDATE,'HH:MM:SS') AS HORA DEL SISTEMA
+                                           *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> SELECT TO_CHAR(SYSDATE,'HH:MM:SS') AS HORA_SISTEMA
+  2  FROM DUAL;
+
+HORA_SIS                                                                                                                                                                                                                                                                                                                                                                                                        
+--------                                                                                                                                                                                                                                                                                                                                                                                                        
+06:12:19                                                                                                                                                                                                                                                                                                                                                                                                        
+
+SQL> REM CONSULTA 3
+SQL> SELECT TO_CHAR(SYSDATE, 'DAY/MONTH/MM/YYYY') AS FECHA_SISTEMA
+  2  FROM DUAL;
+
+FECHA_SISTEMA                                                                                                                                                                                                                                                                                                                                                                                                   
+---------------------------------------------------------------------------------                                                                                                                                                                                                                                                                                                                               
+FRIDAY   /DECEMBER /12/2017                                                                                                                                                                                                                                                                                                                                                                                     
+
+SQL> SELECT TO_CHAR(SYSDATE, 'DAY/MM/MONTH/YYYY') AS FECHA_SISTEMA
+  2  FROM DUAL;
+
+FECHA_SISTEMA                                                                                                                                                                                                                                                                                                                                                                                                   
+---------------------------------------------------------------------------------                                                                                                                                                                                                                                                                                                                               
+FRIDAY   /12/DECEMBER /2017                                                                                                                                                                                                                                                                                                                                                                                     
+
+SQL> REM CONSULTA 4
+SQL> SELECT TO_CHAR(SYSDATE, 'HH24:MM:SS') AS HORA_SISTEMA
+  2  FROM DUAL;
+
+HORA_SIS                                                                                                                                                                                                                                                                                                                                                                                                        
+--------                                                                                                                                                                                                                                                                                                                                                                                                        
+18:12:40                                                                                                                                                                                                                                                                                                                                                                                                        
+
+SQL> REM CONSULTA 5
+SQL> SELECT SYSDATE-PD.FI FROM PLAN_DOCENTE PD
+  2  WHERE PD.DNI=8888 AND PD.CAS=11;
+
+SYSDATE-PD.FI                                                                                                                                                                                                                                                                                                                                                                                                   
+-------------                                                                                                                                                                                                                                                                                                                                                                                                   
+   3027.75867                                                                                                                                                                                                                                                                                                                                                                                                   
+
+SQL> SELECT SYSDATE-PD.FI AS TIEMPO_IMPARTIDO FROM PLAN_DOCENTE PD
+  2  WHERE PD.DNI=8888 AND PD.CAS=11;
+
+TIEMPO_IMPARTIDO                                                                                                                                                                                                                                                                                                                                                                                                
+----------------                                                                                                                                                                                                                                                                                                                                                                                                
+      3027.75916                                                                                                                                                                                                                                                                                                                                                                                                
+
+SQL> REM CONSULTA 6
+SQL> SELECT PRO.P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON PRO.DNI = PD.DNI
+  2  WHERE PD.FF IS NULL AND (SYSDATE-PD.FI)>365;
+
+P                                                                                                                                                                                                                                                                                                                                                                                                               
+------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                                    
+JUAN                                                                                                                                                                                                                                                                                                                                                                                                            
+CARLOS                                                                                                                                                                                                                                                                                                                                                                                                          
+PEDRO                                                                                                                                                                                                                                                                                                                                                                                                           
+PEDRO                                                                                                                                                                                                                                                                                                                                                                                                           
+MARIA                                                                                                                                                                                                                                                                                                                                                                                                           
+MARIA                                                                                                                                                                                                                                                                                                                                                                                                           
+IVAN                                                                                                                                                                                                                                                                                                                                                                                                            
+MARIO                                                                                                                                                                                                                                                                                                                                                                                                           
+FRANCISCO                                                                                                                                                                                                                                                                                                                                                                                                       
+ANGELA                                                                                                                                                                                                                                                                                                                                                                                                          
+DAVID                                                                                                                                                                                                                                                                                                                                                                                                           
+
+P                                                                                                                                                                                                                                                                                                                                                                                                               
+------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                                    
+SOLEDAD                                                                                                                                                                                                                                                                                                                                                                                                         
+JOSE MANUEL                                                                                                                                                                                                                                                                                                                                                                                                     
+
+13 rows selected.
+
+SQL> SELECT DISTINCT PRO.P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON PRO.DNI = PD.DNI
+  2  WHERE PD.FF IS NULL AND (SYSDATE-PD.FI)>365;
+
+P                                                                                                                                                                                                                                                                                                                                                                                                               
+------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                                    
+MARIO                                                                                                                                                                                                                                                                                                                                                                                                           
+JUAN                                                                                                                                                                                                                                                                                                                                                                                                            
+PEDRO                                                                                                                                                                                                                                                                                                                                                                                                           
+FRANCISCO                                                                                                                                                                                                                                                                                                                                                                                                       
+SOLEDAD                                                                                                                                                                                                                                                                                                                                                                                                         
+CARLOS                                                                                                                                                                                                                                                                                                                                                                                                          
+IVAN                                                                                                                                                                                                                                                                                                                                                                                                            
+DAVID                                                                                                                                                                                                                                                                                                                                                                                                           
+MARIA                                                                                                                                                                                                                                                                                                                                                                                                           
+JOSE MANUEL                                                                                                                                                                                                                                                                                                                                                                                                     
+ANGELA                                                                                                                                                                                                                                                                                                                                                                                                          
+
+11 rows selected.
+
+SQL> REM CONSULTA 7
+SQL> SELECT COUNT(*) AS NUM_PROFESORES
+  2  FROM DEPARTAMENTO DEP JOIN AREA ARE ON DEP.CD = ARE.CD
+  3  JOIN PROFESOR PRO ON ARE.CAR = PRO.CAR
+  4  WHERE DEP.D='ASTROFISICA';
+
+NUM_PROFESORES                                                                                                                                                                                                                                                                                                                                                                                                  
+--------------                                                                                                                                                                                                                                                                                                                                                                                                  
+             1                                                                                                                                                                                                                                                                                                                                                                                                  
+
+SQL> REM CONSULTA 8
+SQL> SELECT DEP.D, COUNT(*) AS NUM_PROFESORES
+  2  FROM DEPARTAMENTO DEP JOIN AREA ARE ON DEP.CD = ARE.CD
+  3  JOIN PROFESOR.PRO ON PRO.CAR = ARE.CAR
+  4  GROUP BY DEP.D
+  5  ORDER BY DEP.D ASC;
+JOIN PROFESOR.PRO ON PRO.CAR = ARE.CAR
+              *
+ERROR at line 3:
+ORA-00942: table or view does not exist 
+
+
+SQL> SELECT DEP.D, COUNT(*) AS NUM_PROFESORES
+  2  FROM DEPARTAMENTO DEP JOIN AREA ARE ON DEP.CD = ARE.CD
+  3  JOIN PROFESOR PRO ON PRO.CAR = ARE.CAR
+  4  GROUP BY DEP.D
+  5  ORDER BY DEP.D ASC;
+
+D                                                            NUM_PROFESORES                                                                                                                                                                                                                                                                                                                                     
+------------------------------------------------------------ --------------                                                                                                                                                                                                                                                                                                                                     
+ANALISIS MATEMATICO                                                       3                                                                                                                                                                                                                                                                                                                                     
+ASTROFISICA                                                               1                                                                                                                                                                                                                                                                                                                                     
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION                        7                                                                                                                                                                                                                                                                                                                                     
+MATEMATICA FUNDAMENTAL                                                    1                                                                                                                                                                                                                                                                                                                                     
+
+SQL> SPOOL OFF
