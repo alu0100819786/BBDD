@@ -1,0 +1,551 @@
+SQL> 
+SQL> 
+SQL> SELECT A FROM ASIGNATURA WHERE A LIKE 'A%';
+
+A                                                                               
+--------------------------------------------------                              
+ALMACENES DE DATOS                                                              
+ALGEBRA                                                                         
+ASTRONOMIA                                                                      
+ANALISIS COMPLEJO                                                               
+
+SQL> SELECT A FROM ASIGNATURA WHERE A LIKE '%A';
+
+A                                                                               
+--------------------------------------------------                              
+INFORMATICA BASICA                                                              
+ALGEBRA                                                                         
+ASTRONOMIA                                                                      
+ENSENANZA DE LA MATEMATICA                                                      
+
+SQL> SELECT A FROM ASIGNATURA WHERE A LIKE '%DATOS%';
+
+A                                                                               
+--------------------------------------------------                              
+BASES DE DATOS                                                                  
+ALMACENES DE DATOS                                                              
+MINERIA DE DATOS                                                                
+
+SQL> SELECT DNI FORM PROFESOR WHERE P LIKE '__R%';
+SELECT DNI FORM PROFESOR WHERE P LIKE '__R%'
+                *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> SELECT DNI FROM PROFESOR WHERE P LIKE '__R%';
+
+       DNI                                                                      
+----------                                                                      
+      2222                                                                      
+      4444                                                                      
+      6666                                                                      
+      7777                                                                      
+
+SQL> SELECT DISTINCT DNI FROM PROFESOR WHERE P NOT LIKE '_____%';
+
+       DNI                                                                      
+----------                                                                      
+      1111                                                                      
+      5555                                                                      
+
+SQL> SELECT DISTINCT DNI FROM PROFESOR WHERE P NOT LIKE '______%';
+
+       DNI                                                                      
+----------                                                                      
+      1111                                                                      
+      3333                                                                      
+      4444                                                                      
+      5555                                                                      
+      7777                                                                      
+      1010                                                                      
+
+6 rows selected.
+
+SQL> LA SEGUNDA ES LA BUENA;
+SP2-0734: unknown command beginning "LA SEGUNDA..." - rest of line ignored.
+SQL> SELECT DISTINCT DNI FROM PROFESOR WHERE P LIKE '_____%';
+
+       DNI                                                                      
+----------                                                                      
+      2222                                                                      
+      3333                                                                      
+      4444                                                                      
+      6666                                                                      
+      7777                                                                      
+      8888                                                                      
+      9999                                                                      
+      1010                                                                      
+      2020                                                                      
+      3030                                                                      
+
+10 rows selected.
+
+SQL> SELECT PRO.P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON POR.DNI = PD.DNI
+  2  WHERE PD.FF IS NULL;
+SELECT PRO.P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON POR.DNI = PD.DNI
+                                                       *
+ERROR at line 1:
+ORA-00904: "POR"."DNI": invalid identifier 
+
+
+SQL> SELECT PRO.P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON PRO.DNI = PD.DNI
+  2  WHERE PD.FF IS NULL;
+
+P                                                                               
+------------------------------------------------------------                    
+DAVID                                                                           
+JUAN                                                                            
+SOLEDAD                                                                         
+CARLOS                                                                          
+JOSE MANUEL                                                                     
+PEDRO                                                                           
+PEDRO                                                                           
+MARIA                                                                           
+MARIA                                                                           
+IVAN                                                                            
+MARIO                                                                           
+
+P                                                                               
+------------------------------------------------------------                    
+FRANCISCO                                                                       
+ANGELA                                                                          
+
+13 rows selected.
+
+SQL> SELECT DISTINCT PRO.P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON PRO.DNI = PD.DNI
+  2  WHERE PD.FF IS NULL;
+
+P                                                                               
+------------------------------------------------------------                    
+MARIO                                                                           
+JUAN                                                                            
+PEDRO                                                                           
+FRANCISCO                                                                       
+SOLEDAD                                                                         
+DAVID                                                                           
+CARLOS                                                                          
+IVAN                                                                            
+MARIA                                                                           
+JOSE MANUEL                                                                     
+ANGELA                                                                          
+
+11 rows selected.
+
+SQL> SELECT * FROM PLAN_DOCENTE ORDER BY FF ASC;
+
+       DNI        CAS        CTA        CPA        CLA FI        FF             
+---------- ---------- ---------- ---------- ---------- --------- ---------      
+      2222          3        1.5          0        1.5 01-SEP-06 31-AUG-07      
+      1010          2        1.5        1.5          3 01-SEP-05 31-AUG-08      
+      1010          9          3          0          3 01-SEP-08 31-AUG-09      
+      1111          8          3        1.5        1.5 01-SEP-07 31-AUG-09      
+      4444          4        1.5          0        1.5 01-SEP-08 31-AUG-10      
+      6666         10          3        1.5        1.5 01-SEP-08 31-AUG-11      
+      1010          9        1.5          0        1.5 01-SEP-09                
+      9999          7          3          3          0 01-SEP-10                
+      5555          6          3          3          0 31-MAR-10                
+      8888         11          6          0          0 01-SEP-09                
+      2020          3        1.5          0        1.5 01-SEP-08                
+
+       DNI        CAS        CTA        CPA        CLA FI        FF             
+---------- ---------- ---------- ---------- ---------- --------- ---------      
+      7777         12        4.5          3          0 01-SEP-10                
+      3333          9        1.5          0        1.5 01-SEP-09                
+      2222          4        1.5          0        1.5 01-SEP-09                
+      3030          8          0        1.5        1.5 01-SEP-09                
+      1111          8          3          0          0 01-SEP-09                
+      4444          5          3          0          0 01-SEP-10                
+      4444          1          3        1.5        1.5 01-SEP-11                
+      3333          2        1.5        1.5          3 01-SEP-08                
+
+19 rows selected.
+
+SQL> SELECT * FROM PLAN_DOCENTE ORDER BY FF DESC;
+
+       DNI        CAS        CTA        CPA        CLA FI        FF             
+---------- ---------- ---------- ---------- ---------- --------- ---------      
+      4444          1          3        1.5        1.5 01-SEP-11                
+      3333          2        1.5        1.5          3 01-SEP-08                
+      7777         12        4.5          3          0 01-SEP-10                
+      2020          3        1.5          0        1.5 01-SEP-08                
+      8888         11          6          0          0 01-SEP-09                
+      5555          6          3          3          0 31-MAR-10                
+      9999          7          3          3          0 01-SEP-10                
+      4444          5          3          0          0 01-SEP-10                
+      1111          8          3          0          0 01-SEP-09                
+      3030          8          0        1.5        1.5 01-SEP-09                
+      2222          4        1.5          0        1.5 01-SEP-09                
+
+       DNI        CAS        CTA        CPA        CLA FI        FF             
+---------- ---------- ---------- ---------- ---------- --------- ---------      
+      3333          9        1.5          0        1.5 01-SEP-09                
+      1010          9        1.5          0        1.5 01-SEP-09                
+      6666         10          3        1.5        1.5 01-SEP-08 31-AUG-11      
+      4444          4        1.5          0        1.5 01-SEP-08 31-AUG-10      
+      1010          9          3          0          3 01-SEP-08 31-AUG-09      
+      1111          8          3        1.5        1.5 01-SEP-07 31-AUG-09      
+      1010          2        1.5        1.5          3 01-SEP-05 31-AUG-08      
+      2222          3        1.5          0        1.5 01-SEP-06 31-AUG-07      
+
+19 rows selected.
+
+SQL> SELECT PD.DNI FROM PLAN_DOCENTE PD JOIN ASIGNATURA ASIG ON PD.CAS = ASIG.CAS
+  2  WHERE ASIG.CAS = 8;
+
+       DNI                                                                      
+----------                                                                      
+      1111                                                                      
+      1111                                                                      
+      3030                                                                      
+
+SQL> SELECT PD.DNI FROM PLAN_DOCENTE PD JOIN ASIGNATURA ASIG ON PD.CAS = ASIG.CAS
+  2  WHERE ASIG.A = 'OPTIMIZACION';
+
+       DNI                                                                      
+----------                                                                      
+      3030                                                                      
+      1111                                                                      
+      1111                                                                      
+
+SQL> SELECT PRO. P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON PRO.DNI = PD.DNI
+  2  WHERE PD.CAS = 8;
+
+P                                                                               
+------------------------------------------------------------                    
+JUAN                                                                            
+JUAN                                                                            
+JOSE MANUEL                                                                     
+
+SQL> SELECT  DISTINCT PRO.P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON PRO.DNI = PD.DNI
+  2  WHERE PD.CAS = 8;
+
+P                                                                               
+------------------------------------------------------------                    
+JUAN                                                                            
+JOSE MANUEL                                                                     
+
+SQL> SELECT DISTINCT PRO.P FROM PROFESOR PRO JOIN AREA ARE ON PRO.CAR = ARE.CAR
+  2  WHERE ARE.CD = 4;
+
+P                                                                               
+------------------------------------------------------------                    
+IVAN                                                                            
+
+SQL> SELECT DISTINCT ASIG.A FROM ASIGNATURA ASIG JOIN PLAN_DOCENTE PD ON ASIG.CAS = PD.CAS
+  2  WHERE PD.DNI = 1010;
+
+A                                                                               
+--------------------------------------------------                              
+GESTION DE RIESGOS                                                              
+INTELIGENCIA ARTIFICIAL                                                         
+
+SQL> SELECT DISTINCT ASIG.A FROM ASIGNATURA ASIG JOIN PLAN_DOCENTE PD ON ASIG.CAS = PD.CAS AND JOIN PROFESOR PRO ON PRO.DNI = PD.DNI
+  2  WHERE PRO.P = 'DAVID';
+SELECT DISTINCT ASIG.A FROM ASIGNATURA ASIG JOIN PLAN_DOCENTE PD ON ASIG.CAS = PD.CAS AND JOIN PROFESOR PRO ON PRO.DNI = PD.DNI
+                                                                                               *
+ERROR at line 1:
+ORA-00920: invalid relational operator 
+
+
+SQL> SELECT DISTINCT ASIG.A FROM ASIGNATURA ASIG JOIN PLAN_DOCENTE PD ON ASIG.CAS = PD.CAS
+  2  JOIN PROFESOR PRO ON PRO.DNI = PD.DNI
+  3  WHERE PRO.P = 'DAVID';
+
+A                                                                               
+--------------------------------------------------                              
+GESTION DE RIESGOS                                                              
+INTELIGENCIA ARTIFICIAL                                                         
+
+SQL> SELECT DISTINCT ARE.AR FROM AREA ARE JOIN DEPARTAMENTO DP ON ARE.CD = DP.CD
+  2  WHERE DP.D = 'ESTADISTICA, INVESTIGACION CORPORATIVA Y COMPUTACION';
+
+no rows selected
+
+SQL> SELECT* FROM DEPARTAMENTO;
+
+        CD D                                                                    
+---------- ------------------------------------------------------------         
+         1 ANALISIS MATEMATICO                                                  
+         2 ASTROFISICA                                                          
+         3 ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION                   
+         4 MATEMATICA FUNDAMENTAL                                               
+
+SQL> WHERE DP.D = 'ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION';
+SP2-0734: unknown command beginning "WHERE DP.D..." - rest of line ignored.
+SQL> WHERE DP.D = 'ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION'
+SP2-0734: unknown command beginning "WHERE DP.D..." - rest of line ignored.
+SQL> SELECT DISTINCT ARE.AR FROM AREA ARE JOIN DEPARTAMENTO DP ON ARE.CD = DP.CD
+  2  WHERE DP.D = 'ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION';
+
+AR                                                                              
+------------------------------------------------------------                    
+CIENCIAS DE LA COMPUTACION E INTELIGENCIA ARTIFICIAL                            
+ESTADISTICA E INVESTIGACION OPERATIVA                                           
+LENGUAJES Y SISTEMAS INFORMATICOS                                               
+
+SQL> SELECT DISTINCT ASIG.A FROM ASIGNATURA ASIG JOIN PLAN_DOCENTE PD ON ASIG.CAS = PD.CAS
+  2  JOIN PROFESOR PRO ON PRO.DNI = PD.DNI
+  3  WHERE PRO.CAT = 'CU' AND FF IS NULL;
+
+A                                                                               
+--------------------------------------------------                              
+OPTIMIZACION                                                                    
+ALMACENES DE DATOS                                                              
+
+SQL> SELECT DISTINCT ASIG.A FROM ASIGNATURA ASIG JOIN PLAN_DOCENTE PD ON ASIG.CAS = PD.CAS
+  2  JOIN PROFESOR PRO ON PRO.DNI = PD.DNI
+  3  WHERE PRO.CAT = 'CU' AND FF IS NOT NULL;
+
+A                                                                               
+--------------------------------------------------                              
+OPTIMIZACION                                                                    
+
+SQL> SELECT DISTINCT ASIG.A FROM ASIGNATURA ASIG JOIN AREA ARE ON ASIG.CAR = ARE.CAR
+  2  WHERE ARE.AR = 'LENGUAJES Y SISTEMAS INFORMATICOS' OR ARE.AR= 'CIENCIAS DE LA COMPUTACION E INTELIGENCIA ARTIFICIAL';
+
+A                                                                               
+--------------------------------------------------                              
+INFORMATICA BASICA                                                              
+BASES DE DATOS                                                                  
+GESTION DE RIESGOS                                                              
+INTELIGENCIA ARTIFICIAL                                                         
+MINERIA DE DATOS                                                                
+ALMACENES DE DATOS                                                              
+
+6 rows selected.
+
+SQL> SELECT DISTINCT PRO.P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON PRO.DNI = PD.DNI
+  2  JOIN ASIGNATURA ASIG ON ASIG.CAS = PD.CAS
+  3  WHERE ASIG.T = 'GII' OR ASIG.T = 'MII';
+
+P                                                                               
+------------------------------------------------------------                    
+JUAN                                                                            
+PEDRO                                                                           
+SOLEDAD                                                                         
+CARLOS                                                                          
+IVAN                                                                            
+DAVID                                                                           
+MARIA                                                                           
+JOSE MANUEL                                                                     
+ANGELA                                                                          
+
+9 rows selected.
+
+SQL> SELECT DISTINCT PRO.P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON PRO.DNI = PD.DNI
+  2  JOIN ASIGNATURA ASIG ON ASIG.CAS = PD.CAS
+  3  WHERE ASIG.T = 'GII' OR ASIG.T = 'MII';
+
+P                                                                               
+------------------------------------------------------------                    
+JUAN                                                                            
+PEDRO                                                                           
+SOLEDAD                                                                         
+CARLOS                                                                          
+IVAN                                                                            
+DAVID                                                                           
+MARIA                                                                           
+JOSE MANUEL                                                                     
+ANGELA                                                                          
+
+9 rows selected.
+
+SQL> SELECT DISTINCT PRO.P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON PRO.DNI = PD.DNI
+  2  JOIN ASIGNATURA ASIG ON ASIG.CAS = PD.CAS
+  3  WHERE ASIG.T = 'GII' AND ASIG.T = 'MII';
+
+no rows selected
+
+SQL> SELECT PRO.P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON PRO.DNI = PD.DNI
+  2  JOIN ASIGNATURA ASIG ON ASIG.CAS = PD.CAS
+  3  
+SQL> 
+SQL> WHERE ASIG.T = 'GII' AND ASIG.T = 'MII';
+SP2-0734: unknown command beginning "WHERE ASIG..." - rest of line ignored.
+SQL> SELECT PRO.P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON PRO.DNI = PD.DNI
+  2  JOIN ASIGNATURA ASIG ON ASIG.CAS = PD.CAS
+  3  WHERE (ASIG.T = 'GII' AND FF IS NULL) AND (ASIG.T = 'MII' AND FF IS NULL);
+
+no rows selected
+
+SQL> SELECT PRO.P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON PRO.DNI = PD.DNI
+  2  JOIN ASIGNATURA ASIG ON ASIG.CAS = PD.CAS
+  3  WHERE (ASIG.T = 'GII' AND FF IS NULL) OR (ASIG.T = 'MII' AND FF IS NULL);
+
+P                                                                               
+------------------------------------------------------------                    
+JUAN                                                                            
+CARLOS                                                                          
+PEDRO                                                                           
+PEDRO                                                                           
+MARIA                                                                           
+MARIA                                                                           
+IVAN                                                                            
+ANGELA                                                                          
+DAVID                                                                           
+SOLEDAD                                                                         
+JOSE MANUEL                                                                     
+
+11 rows selected.
+
+SQL> SELECT DISTINCT PRO.P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON PRO.DNI = PD.DNI
+  2  JOIN ASIGNATURA ASIG ON ASIG.CAS = PD.CAS
+  3  WHERE (ASIG.T = 'GII' AND FF IS NULL) OR (ASIG.T = 'MII' AND FF IS NULL);
+
+P                                                                               
+------------------------------------------------------------                    
+JUAN                                                                            
+PEDRO                                                                           
+SOLEDAD                                                                         
+CARLOS                                                                          
+IVAN                                                                            
+DAVID                                                                           
+MARIA                                                                           
+JOSE MANUEL                                                                     
+ANGELA                                                                          
+
+9 rows selected.
+
+SQL> ESTA ULTIMA ES LA 19 BUENA;
+SP2-0734: unknown command beginning "ESTA ULTIM..." - rest of line ignored.
+SQL> SEGUIMOS CON LA 20;
+SP2-0734: unknown command beginning "SEGUIMOS C..." - rest of line ignored.
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> SELECT DISTINCT PRO.P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON PRO.DNI = PD.DNI
+  2  JOIN ASIGNATURA ASIG ON ASIG.CAS = PD.CAS
+  3  WHERE (ASIG.T = 'GII' AND FF IS NULL) OR (ASIG.T = 'MII' AND FF IS NULL);
+
+P                                                                               
+------------------------------------------------------------                    
+JUAN                                                                            
+PEDRO                                                                           
+SOLEDAD                                                                         
+CARLOS                                                                          
+IVAN                                                                            
+DAVID                                                                           
+MARIA                                                                           
+JOSE MANUEL                                                                     
+ANGELA                                                                          
+
+9 rows selected.
+
+SQL> DEJAMOS LA 20 ATRAS POR QUE NO SE AUN COMO SE HACE PASAMOS A LA 21;
+SP2-0734: unknown command beginning "DEJAMOS LA..." - rest of line ignored.
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> SELECT DISTINCT PRO.P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON PRO.DNI = PD.DNI
+  2  JOIN ASIGNATURA ASIG ON ASIG.CAS = PD.CAS
+  3  WHERE (ASIG.T = 'GII' AND PD.FF IS NULL) OR (ASIG.T = 'MII' AND PD.FF IS NULL);
+
+P                                                                               
+------------------------------------------------------------                    
+JUAN                                                                            
+PEDRO                                                                           
+SOLEDAD                                                                         
+CARLOS                                                                          
+IVAN                                                                            
+DAVID                                                                           
+MARIA                                                                           
+JOSE MANUEL                                                                     
+ANGELA                                                                          
+
+9 rows selected.
+
+SQL> SELECT DISTINCT PRO.P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON PRO.DNI = PD.DNI
+  2  JOIN ASIGNATURA ASIG ON ASIG.CAS = PD.CAS
+  3  WHERE (ASIG.T = 'GII' AND PD.FF IS NULL) AND (ASIG.T = 'MII' AND PD.FF IS NULL);
+
+no rows selected
+
+SQL> AHORA SI DEJAMOS LA 20 ATRAS;
+SP2-0734: unknown command beginning "AHORA SI D..." - rest of line ignored.
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> SELECT DISTINCT PRO.P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON PRO.DNI = PD.DNI
+  2  WHERE PD.FF IS NOT NULL;
+
+P                                                                               
+------------------------------------------------------------                    
+JUAN                                                                            
+DAVID                                                                           
+CARLOS                                                                          
+CARMEN                                                                          
+MARIA                                                                           
+
+SQL> SELECT DISTINCT PRO.P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON PRO.DNI = PD.DNI
+  2  WHERE PD.FF IS NOT NULL;
+
+P                                                                               
+------------------------------------------------------------                    
+JUAN                                                                            
+DAVID                                                                           
+CARLOS                                                                          
+CARMEN                                                                          
+MARIA                                                                           
+
+SQL> DEJAMOS LA 21 TAMBIEN PASAMOS A LA 22
+SP2-0734: unknown command beginning "DEJAMOS LA..." - rest of line ignored.
+SQL> 
+SQL> 
+SQL> 
+SQL> SELECT A FROM ASIGNATURA WHERE T = 'GII';
+
+A                                                                               
+--------------------------------------------------                              
+BASES DE DATOS                                                                  
+INTELIGENCIA ARTIFICIAL                                                         
+INFORMATICA BASICA                                                              
+ALGEBRA                                                                         
+CALCULO                                                                         
+OPTIMIZACION                                                                    
+GESTION DE RIESGOS                                                              
+
+7 rows selected.
+
+SQL> SELECT AR FROM AREA UNION SELECT A FROM ASIGNATURA;
+
+AR                                                                              
+------------------------------------------------------------                    
+ALGEBRA                                                                         
+ALMACENES DE DATOS                                                              
+ANALISIS COMPLEJO                                                               
+ANALISIS MATEMATICO                                                             
+ASTRONOMIA                                                                      
+ASTRONOMIA Y ASTROFISICA                                                        
+BASES DE DATOS                                                                  
+CALCULO                                                                         
+CIENCIAS DE LA COMPUTACION E INTELIGENCIA ARTIFICIAL                            
+DIDACTICA DE LA MATEMATICA                                                      
+ENSENANZA DE LA MATEMATICA                                                      
+
+AR                                                                              
+------------------------------------------------------------                    
+ESTADISTICA E INVESTIGACION OPERATIVA                                           
+GESTION DE RIESGOS                                                              
+INFORMATICA BASICA                                                              
+INTELIGENCIA ARTIFICIAL                                                         
+LENGUAJES Y SISTEMAS INFORMATICOS                                               
+MATEMATICA APLICADA                                                             
+MINERIA DE DATOS                                                                
+OPTIMIZACION                                                                    
+
+19 rows selected.
+
+SQL> DEJAMOS 23, 24 Y 25 PARA MAANA QUE NO SE COMO VAN;
+SP2-0734: unknown command beginning "DEJAMOS 23..." - rest of line ignored.
+SQL> SPOOL OFF
