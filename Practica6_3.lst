@@ -1,0 +1,200 @@
+SQL> CLEAR SCREEN
+SQL> REM CONSULTA 19
+SQL> SELECT SUM(CLA+CPA+CTA) AS NUM_CREDITOS
+  2  FROM PLAN_DOCENTE WHERE DNI = 1111;
+
+NUM_CREDITOS                                                                                                                                                                                                                                                                                                                                                                                                    
+------------                                                                                                                                                                                                                                                                                                                                                                                                    
+           9                                                                                                                                                                                                                                                                                                                                                                                                    
+
+SQL> REM CONSULTA 20
+SQL> REM SOY BOBO REPETIMOS CONSULTA 3
+SQL> SELECT TO_CHAR(SYSDATE, 'DAY/DD/MONTH/YYYY') AS FECHA_SISTEMA
+  2  FROM DUAL;
+
+FECHA_SISTEMA                                                                                                                                                                                                                                                                                                                                                                                                   
+---------------------------------------------------------------------------------                                                                                                                                                                                                                                                                                                                               
+FRIDAY   /15/DECEMBER /2017                                                                                                                                                                                                                                                                                                                                                                                     
+
+SQL> REM CONSULTA 20
+SQL> SELECT PRO.P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON PRO.DNI = PD.DNI
+  2  WHERE FF IS NULL AND SUM(PD.CLA+PD.CPA+PDCTA)=(SELECT MAX(SUM(PD.CLA+PD.CPA+PD.CTA))
+  3  FROM PLAN_DOCENTE PD);
+WHERE FF IS NULL AND SUM(PD.CLA+PD.CPA+PDCTA)=(SELECT MAX(SUM(PD.CLA+PD.CPA+PD.CTA))
+                     *
+ERROR at line 2:
+ORA-00934: group function is not allowed here 
+
+
+SQL> SELECT PRO.P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON PRO.DNI = PD.DNI
+  2  WHERE FF IS NULL AND SUM(PD.CLA+PD.CPA+PD.CTA)=(SELECT MAX(SUM(PD.CLA+PD.CPA+PD.CTA))
+  3  FROM PLAN_DOCENTE PD);
+WHERE FF IS NULL AND SUM(PD.CLA+PD.CPA+PD.CTA)=(SELECT MAX(SUM(PD.CLA+PD.CPA+PD.CTA))
+                     *
+ERROR at line 2:
+ORA-00934: group function is not allowed here 
+
+
+SQL> REM REPETIMOS CONSULTA 6
+SQL> SELECT PRO.P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON PRO.DNI = PD.DNI
+  2  WHERE PD.FF IS NOT NULL AND (SYSDATE-PD.FI)>365;
+
+P                                                                                                                                                                                                                                                                                                                                                                                                               
+------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                                    
+JUAN                                                                                                                                                                                                                                                                                                                                                                                                            
+CARLOS                                                                                                                                                                                                                                                                                                                                                                                                          
+MARIA                                                                                                                                                                                                                                                                                                                                                                                                           
+CARMEN                                                                                                                                                                                                                                                                                                                                                                                                          
+DAVID                                                                                                                                                                                                                                                                                                                                                                                                           
+DAVID                                                                                                                                                                                                                                                                                                                                                                                                           
+
+6 rows selected.
+
+SQL> REM CONSULTA 20 DE NUEVO
+SQL> REM CONSULTA 6 DE NUEVO
+SQL> SELECT PRO.P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON PRO.DNI = PD.DNI
+  2  WHERE PD.FF IS NOT NULL AND (PD.FF-PD.FI)>365;
+
+P                                                                                                                                                                                                                                                                                                                                                                                                               
+------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                                    
+JUAN                                                                                                                                                                                                                                                                                                                                                                                                            
+MARIA                                                                                                                                                                                                                                                                                                                                                                                                           
+CARMEN                                                                                                                                                                                                                                                                                                                                                                                                          
+DAVID                                                                                                                                                                                                                                                                                                                                                                                                           
+
+SQL> REM CONSULTA 20 OTRA VEZ
+SQL> SELECT PRO.P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON PRO.DNI = PD.DNI
+  2  WHERE FF IS NULL AND CREDITOS=(SELECT MAX(SUM(PD.CLA+PD.CPA+PD.CTA))
+  3  FROM PLAN_DOCENTE PD);
+WHERE FF IS NULL AND CREDITOS=(SELECT MAX(SUM(PD.CLA+PD.CPA+PD.CTA))
+                     *
+ERROR at line 2:
+ORA-00904: "CREDITOS": invalid identifier 
+
+
+SQL> SELECT PRO.P FROM PROFESOR PRO JOIN PLAN_DOCENTE PD ON PRO.DNI = PD.DNI
+  2  WHERE FF IS NULL AND SUM(PD.CLA+PD.CPA+PD.CTA) AS CREDITOS=(SELECT MAX(SUM(PD.CLA+PD.CPA+PD.CTA))
+  3  FROM PLAN_DOCENTE PD);
+WHERE FF IS NULL AND SUM(PD.CLA+PD.CPA+PD.CTA) AS CREDITOS=(SELECT MAX(SUM(PD.CLA+PD.CPA+PD.CTA))
+                     *
+ERROR at line 2:
+ORA-00934: group function is not allowed here 
+
+
+SQL> SELECT P
+  2  
+SQL> SELECT P FROM ( SELECT DNI, SUM(CLA,CPA,CTA) AS CREDITOS
+  2  FROM PLAN_DOCENTE WHERE FF IS NULL
+  3  GROUP BY DNI) NATURAL JOIN PROFESOR
+  4  WHERE CREDITOS = (SELECT MAX(SUM(CLA+CPA+CTA)) FROM PLAN_DOCENTE
+  5  WHERE FF IS NULL GROUP BY DNI);
+SELECT P FROM ( SELECT DNI, SUM(CLA,CPA,CTA) AS CREDITOS
+                            *
+ERROR at line 1:
+ORA-00909: invalid number of arguments 
+
+
+SQL> SELECT P FROM ( SELECT DNI, SUM(CLA+CPA+CTA) AS CREDITOS
+  2  FROM PLAN_DOCENTE WHERE FF IS NULL
+  3  GROUP BY DNI) NATURAL JOIN PROFESOR
+  4  WHERE CREDITOS = (SELECT MAX(SUM(CLA+CPA+CTA)) FROM PLAN_DOCENTE
+  5  WHERE FF IS NULL GROUP BY DNI);
+
+P                                                                                                                                                                                                                                                                                                                                                                                                               
+------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                                    
+MARIA                                                                                                                                                                                                                                                                                                                                                                                                           
+PEDRO                                                                                                                                                                                                                                                                                                                                                                                                           
+
+SQL> REM CONSULTA 21
+SQL> SELECT AVG(NUM_ASIGNATURAS) AS MEDIA_ASIG
+  2  FROM(SELECT COUNT(A) AS NUM_ASIGNATURAS
+  3  FROM ASIGNATURA
+  4  GROUP BY CAR;
+GROUP BY CAR
+           *
+ERROR at line 4:
+ORA-00907: missing right parenthesis 
+
+
+SQL> SELECT AVG(NUM_ASIGNATURAS) AS MEDIA_ASIG
+  2  FROM(SELECT COUNT(A) AS NUM_ASIGNATURAS
+  3  FROM ASIGNATURA
+  4  GROUP BY CAR);
+
+MEDIA_ASIG                                                                                                                                                                                                                                                                                                                                                                                                      
+----------                                                                                                                                                                                                                                                                                                                                                                                                      
+       1.5                                                                                                                                                                                                                                                                                                                                                                                                      
+
+SQL> REM CONSULTA 22
+SQL> SELECT AVG(NUM_PROFESORES) AS MEDIA_PROF
+  2  FROM(SELECT COUNT(*) AS NUM_PROFESORES
+  3  FROM (DEPARTAMENTO NATURAL JOIN AREA)NATURAL JOIN PROFESOR
+  4  GROUP BY CD);
+
+MEDIA_PROF                                                                                                                                                                                                                                                                                                                                                                                                      
+----------                                                                                                                                                                                                                                                                                                                                                                                                      
+         3                                                                                                                                                                                                                                                                                                                                                                                                      
+
+SQL> REM CONSULTA 23
+SQL> SELECT AR FROM (SELECT CAR, COUNT(*) AS NUM_ASIG
+  2  FROM ASIGNATURA GROUP BY CAR) NATURAL JOIN AREA
+  3  WHERE NUM_ASIGNATURAS>3;
+WHERE NUM_ASIGNATURAS>3
+      *
+ERROR at line 3:
+ORA-00904: "NUM_ASIGNATURAS": invalid identifier 
+
+
+SQL> SELECT AR FROM (SELECT CAR, COUNT(*) AS NUM_ASIG
+  2  FROM ASIGNATURA GROUP BY CAR) NATURAL JOIN AREA
+  3  WHERE NUM_ASIG>3;
+
+AR                                                                                                                                                                                                                                                                                                                                                                                                              
+------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                                    
+LENGUAJES Y SISTEMAS INFORMATICOS                                                                                                                                                                                                                                                                                                                                                                               
+
+SQL> REM CONSULTA 24
+SQL> SELECT AR FROM (SELECT CAR, COUNT(*) AS NUM_ASIG
+  2  FROM ASIGNATURA GROUP BY CAR) NATURAL JOIN AREA
+  3  WHERE NUM_ASIG>6;
+
+no rows selected
+
+SQL> REM CONSULTA 25
+SQL> SELECT D FROM (SELECT D, COUNT(+) AS NUM_PROF
+  2  FROM(DEPARTAMENTO NATURAL JOIN AREA) NATURAL JOIN PROFESOR
+  3  GROUP BY D)
+  4  WHERE NUM_PROF = (SELECT MIN(COUNT(*))
+  5  FROM (DEPARTAMENTO NATURAL JOIN AREA) NATURAL JOIN PROFESOR
+  6  GROUP BY D);
+SELECT D FROM (SELECT D, COUNT(+) AS NUM_PROF
+                              *
+ERROR at line 1:
+ORA-30563: outer join operator (+) is not allowed here 
+
+
+SQL> SELECT D FROM (SELECT D, COUNT(*) AS NUM_PROF
+  2  FROM(DEPARTAMENTO NATURAL JOIN AREA) NATURAL JOIN PROFESOR
+  3  GROUP BY D);
+
+D                                                                                                                                                                                                                                                                                                                                                                                                               
+------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                                    
+ESTADISTICA, INVESTIGACION OPERATIVA Y COMPUTACION                                                                                                                                                                                                                                                                                                                                                              
+ASTROFISICA                                                                                                                                                                                                                                                                                                                                                                                                     
+ANALISIS MATEMATICO                                                                                                                                                                                                                                                                                                                                                                                             
+MATEMATICA FUNDAMENTAL                                                                                                                                                                                                                                                                                                                                                                                          
+
+SQL> SELECT D FROM (SELECT D, COUNT(*) AS NUM_PROF
+  2  FROM(DEPARTAMENTO NATURAL JOIN AREA) NATURAL JOIN PROFESOR
+  3  GROUP BY D)
+  4  WHERE NUM_PROF = (SELECT MIN(COUNT(*))
+  5  FROM(DEPARTAMENTO NATURAL JOIN AREA) NATURAL JOIN PROFESOR
+  6  GROUP BY D);
+
+D                                                                                                                                                                                                                                                                                                                                                                                                               
+------------------------------------------------------------                                                                                                                                                                                                                                                                                                                                                    
+ASTROFISICA                                                                                                                                                                                                                                                                                                                                                                                                     
+MATEMATICA FUNDAMENTAL                                                                                                                                                                                                                                                                                                                                                                                          
+
+SQL> REM TERMINAMOS PRACTICA 6
+SQL> SPOOL OFF
